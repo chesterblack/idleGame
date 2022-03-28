@@ -8,14 +8,25 @@
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
+
+    <?php
+        require_once ($_SERVER['DOCUMENT_ROOT'] . '/../guyclicker.class.php');
+
+        $guyClicker = new GuyClicker();
+
+        $savedGame = $guyClicker->loadGame();
+
+        $guyCount = $savedGame->guys ?? 0;
+    ?>
+
     <h1>
         Let's click some guys
     </h1>
     <div class="hud">
-        Guys you got: <span class="guy-counter">0</span>
+        Guys you got: <span class="guy-counter"><?= $guyCount; ?></span>
     </div>
     <button class="guy-clicker">
-        click
+        let there be guys
     </button>
 
     <script src="guyclicker.js"></script>

@@ -3,15 +3,42 @@ const guyCounter = document.querySelector('.guy-counter');
 const root = document.documentElement;
 const guyJumpRange = 750;
 
-
-let guyCount = 0;
+let guyCount = parseInt(guyCounter.innerText);
 
 guyClickerButton.addEventListener('click', () => {
     guyCount++;
     guyCounter.innerText = guyCount;
+
     let guy = createGuy();
     makeGuyJump(guy);
+    saveGame();
 });
+
+function getCookies() {
+    const cookies = Object.fromEntries(
+        document.cookie.split('; ').map((entry) => entry.split('='))
+    );
+    return cookies;
+}
+
+function saveGame() {
+    let url = '../save.php?guys=' + guyCount;
+    let cookies = getCookies();
+
+    console.log(cookies);
+
+    if (cookies.saveid) {
+        url += `&id=${cookies.saveid}`;
+    }
+
+    fetch (url, {method: 'GET'})
+        .then (response => response.text())
+        .then ((response) => {
+            if (response) {
+                document.cookie = `saveid=${response}; path=/`;
+            }
+        })
+}
 
 function createGuy() {
     let guy = document.createElement('div');
@@ -57,7 +84,7 @@ function makeGuyJump(guy) {
 
     guyJumperInner.animate([
         {
-            left: '0',
+            left: '80px',
             easing: 'ease-in'
         },
         {
