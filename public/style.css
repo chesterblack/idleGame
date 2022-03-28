@@ -1,43 +1,28 @@
-:root {
-    --guy-direction-X: 500px;
-}
-
 body {
     text-align: center;
 }
 
+.guy-clicker {
+    position: relative;
+}
+
 .guy {
     position: absolute;
-    animation: xAxis 1s normal ease-in;
-    width: 20px;
+    width: 40px;
     height: 40px;
 }
 
-.guy::after {
+.guy-inner {
     content: "";
     display: block;
     position: absolute;
-    width: 20px;
+    /* background-color: #000; */
+    width: 40px;
     height: 40px;
-    background-color: #000;
-    animation: yAxis 1s normal ease-out;
 }
-  
-  @keyframes xAxis {
-    100% {
-      animation-timing-function: ease-in;
-      transform: translateX(var(--guy-direction-X));
-    }
-  }
-  
-  @keyframes yAxis {
-    10% {
-      animation-timing-function: ease-in-out;
-      transform: translateY(-100px);
-    }
 
-    100% {
-        animation-timing-function: ease-in;
-        transform: translateY(400px);  
-    }
-  }
+.hud {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

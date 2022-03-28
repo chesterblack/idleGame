@@ -11,7 +11,7 @@
     <h1>
         Let's click some guys
     </h1>
-    <div>
+    <div class="hud">
         Guys you got: <span class="guy-counter">0</span>
     </div>
     <button class="guy-clicker">
