@@ -28,10 +28,11 @@
             <div class="guy-collection"></div>
         </div>
     </div>
+    <div class="guy-spawner"></div>
     <button class="guy-clicker">
         let there be guys
     </button>
-    <div class="guy-spawner"></div>
+    <button class="autoguy-toggle">you do it for me</button>
 
     <script src="guyclicker.js"></script>
 </body>

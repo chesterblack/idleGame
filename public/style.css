@@ -6,24 +6,32 @@ body {
     font-weight: 100;
 }
 
-.guy-clicker {
-    position: relative;
+button {
     font-family: Roboto, sans-serif;
     font-size: 30px;
+    background: none;
+    border: 1px solid #000;
+    border-radius: 5px;
+    display: block;
+    margin: 10px auto;
+}
+
+.guy-clicker {
+    position: relative;
 }
 
 .guy {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
 }
 
 .guy-inner {
     content: "";
     display: block;
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
 }
 
 .hud {
@@ -38,8 +46,8 @@ body {
 }
 
 .guy-collection img {
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
 }
 
 .guy-spawner {

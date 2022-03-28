@@ -1,5 +1,6 @@
-const maxGuys = 3;
+const maxGuys = 4;
 const guyClickerButton = document.querySelector('.guy-clicker');
+const autoGuyButton = document.querySelector('.autoguy-toggle');
 const guyCounter = document.querySelector('.guy-counter');
 const root = document.documentElement;
 const guyJumpRange = 750;
@@ -7,6 +8,13 @@ const guyMuseum = document.querySelector('.guy-collection');
 
 let guyCollection = [];
 let guyCount = parseInt(guyCounter.innerText);
+
+let autoGuyer;
+let autoGuyerActive = false;
+
+autoGuyButton.addEventListener('click', () => {
+    toggleAutoGuyer();
+});
 
 guyClickerButton.addEventListener('click', () => {
     guyCount++;
@@ -127,4 +135,20 @@ function makeGuyJump(guy) {
     setTimeout(() => {
         guyJumper.parentNode.removeChild(guyJumper);
     }, 800);
+}
+
+function toggleAutoGuyer() {
+    if (autoGuyerActive) {
+        autoGuyerActive = false;
+        clearInterval(autoGuyer);
+        autoGuyButton.innerText = "ok yea let the guys flow";
+    } else {
+        autoGuyerActive = true;
+        autoGuyer = window.setInterval(autoGuyerisation, 500);
+        autoGuyButton.innerText = "wait no stop";
+    }
+}
+
+function autoGuyerisation() {
+    guyClickerButton.click();
 }
