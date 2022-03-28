@@ -11,11 +11,8 @@
 
     <?php
         require_once ($_SERVER['DOCUMENT_ROOT'] . '/../guyclicker.class.php');
-
         $guyClicker = new GuyClicker();
-
         $savedGame = $guyClicker->loadGame();
-
         $guyCount = $savedGame->guys ?? 0;
     ?>
 
@@ -23,11 +20,18 @@
         Let's click some guys
     </h1>
     <div class="hud">
-        Guys you got: <span class="guy-counter"><?= $guyCount; ?></span>
+        <div>
+            Guys you got: <span class="guy-counter"><?= $guyCount; ?></span>
+        </div>
+        <div>
+            Guy collection:
+            <div class="guy-collection"></div>
+        </div>
     </div>
     <button class="guy-clicker">
         let there be guys
     </button>
+    <div class="guy-spawner"></div>
 
     <script src="guyclicker.js"></script>
 </body>

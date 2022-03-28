@@ -1,8 +1,11 @@
+const maxGuys = 3;
 const guyClickerButton = document.querySelector('.guy-clicker');
 const guyCounter = document.querySelector('.guy-counter');
 const root = document.documentElement;
 const guyJumpRange = 750;
+const guyMuseum = document.querySelector('.guy-collection');
 
+let guyCollection = [];
 let guyCount = parseInt(guyCounter.innerText);
 
 guyClickerButton.addEventListener('click', () => {
@@ -40,12 +43,40 @@ function saveGame() {
         })
 }
 
+function upsert(array, element) {
+    const i = array.findIndex(_element => _element.id === element.id);
+    if (i > -1) {
+        array[i] = element;
+        return false;
+    } else {
+        array.push(element);
+        return true;
+    };
+}
+
 function createGuy() {
     let guy = document.createElement('div');
     let guyInner = document.createElement('img');
 
-    guyInner.src = './guys/guy-'+randomNumber(1, 2)+'.png';
+    const flipped = randomNumber(0,1);
+    const guyID = randomNumber(1, maxGuys);
 
+    if (upsert(guyCollection, {id: guyID})) {
+        guyMuseum.innerHTML = '';
+
+        for (let i = 0; i < guyCollection.length; i++) {
+            const guyCollected = guyCollection[i];
+            let guyExhibit = document.createElement('img');
+            guyExhibit.src = `./guys/guy-${guyCollected.id}.png`;
+            guyMuseum.appendChild(guyExhibit);
+        }
+    }
+
+    guyInner.src = `./guys/guy-${guyID}.png`;
+
+    if (flipped) {
+        guy.classList.add('flipped');
+    }
     guy.classList.add('guy');
     guyInner.classList.add('guy-inner');
 
@@ -63,7 +94,7 @@ function makeGuyJump(guy) {
     let guyJumperInner = guy.querySelector('.guy-inner');
     let rand = randomNumber(-guyJumpRange, guyJumpRange);
 
-    guyClickerButton.appendChild(guyJumper);
+    document.querySelector('.guy-spawner').appendChild(guyJumper);
 
     guyJumper.animate([
         {
@@ -84,7 +115,7 @@ function makeGuyJump(guy) {
 
     guyJumperInner.animate([
         {
-            left: '80px',
+            left: '0',
             easing: 'ease-in'
         },
         {
