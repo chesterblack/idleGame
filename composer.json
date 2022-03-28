@@ -1,0 +1,18 @@
+{
+    "name": "chesterblack/idle-game",
+    "autoload": {
+        "psr-4": {
+            "Chesterblack\\IdleGame\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "chesterblack",
+            "email": "chez.black@hotmail.co.uk"
+        }
+    ],
+    "require": {
+        "mongodb/mongodb": "^1.8",
+        "vlucas/phpdotenv": "^5.3"
+    }
+}
