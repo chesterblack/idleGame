@@ -14,6 +14,8 @@
         $guyClicker = new GuyClicker();
         $savedGame = $guyClicker->loadGame();
         $guyCount = $savedGame->guys ?? 0;
+        $guyCollection = $savedGame->museum ?? [];
+        $guyMuseum = [];
     ?>
 
     <h1>
@@ -25,7 +27,17 @@
         </div>
         <div>
             Guy collection:
-            <div class="guy-collection"></div>
+            <div class="guy-collection">
+                <?php
+                    foreach ($guyCollection as $guyID) {
+                        $guyMuseum[] = [
+                            'id' => $guyID
+                        ];
+
+                        echo "<img src=\"/guys/guy-".$guyID.".png\" data-guyid=\"".$guyID."\">";
+                    }
+                ?>
+            </div>
         </div>
     </div>
     <div class="guy-spawner"></div>

@@ -4,12 +4,14 @@
     $guyClicker = new GuyClicker();
 
     $saveid = $_GET['id'] ?? null;
+    $guyMuseum = $_GET['museum'] ?? [];
+
+    $result = $guyClicker->saveGame($_GET['guys'], $saveid, $guyMuseum);
     
     if (!isset($_GET['id'])) {
-        $id = $guyClicker->saveGame($_GET['guys'], $saveid)->getInsertedId();
+        $id = $result->getInsertedId();
+
         foreach ($id as $oid) {
             echo $oid;
         }
-    } else {
-        $guyClicker->saveGame($_GET['guys'], $saveid);
     }

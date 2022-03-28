@@ -14,17 +14,20 @@
             $this->collection = $database->savegames;
         }
 
-        function saveGame($guys, $id = null) {
+        function saveGame($guys, $id = null, $museum = []) {
+            $inserts = [
+                'guys' => $guys,
+                'museum' => $museum
+            ];
+
             if ($id) {
                 $result = $this->collection->updateOne(
                     ['_id' => $id],
-                    ['$set' => ['guys' => $guys]],
+                    ['$set' => $inserts],
                     ['upsert' => true]
                 );
             } else {
-                $result = $this->collection->insertOne([
-                    'guys' => $guys
-                ]);
+                $result = $this->collection->insertOne($inserts);
             }
 
             return $result;

@@ -12,6 +12,14 @@ let guyCount = parseInt(guyCounter.innerText);
 let autoGuyer;
 let autoGuyerActive = false;
 
+for (let i = 0; i < guyMuseum.children.length; i++) {
+    const guyExhibit = guyMuseum.children[i];
+    console.log(guyExhibit);
+    guyCollection.push({id: parseInt(guyExhibit.dataset.guyid)});
+
+    console.log(guyCollection);
+}
+
 autoGuyButton.addEventListener('click', () => {
     toggleAutoGuyer();
 });
@@ -42,6 +50,11 @@ function saveGame() {
         url += `&id=${cookies.saveid}`;
     }
 
+    for (let i = 0; i < guyCollection.length; i++) {
+        const guyID = guyCollection[i].id;
+        url += `&museum[]=${guyID}`;
+    }
+
     fetch (url, {method: 'GET'})
         .then (response => response.text())
         .then ((response) => {
@@ -62,6 +75,20 @@ function upsert(array, element) {
     };
 }
 
+function addGuyToMuseum(guy) {
+    console.log(guyCollection);
+    if (upsert(guyCollection, {id: guy})) {
+        guyMuseum.innerHTML = '';
+        for (let i = 0; i < guyCollection.length; i++) {
+            const guyCollected = guyCollection[i];
+            let guyExhibit = document.createElement('img');
+            guyExhibit.src = `./guys/guy-${guyCollected.id}.png`;
+            guyExhibit.setAttribute('data-guyid', guyCollected.id);
+            guyMuseum.appendChild(guyExhibit);
+        }
+    }
+}
+
 function createGuy() {
     let guy = document.createElement('div');
     let guyInner = document.createElement('img');
@@ -69,17 +96,7 @@ function createGuy() {
     const flipped = randomNumber(0,1);
     const guyID = randomNumber(1, maxGuys);
 
-    if (upsert(guyCollection, {id: guyID})) {
-        guyMuseum.innerHTML = '';
-
-        for (let i = 0; i < guyCollection.length; i++) {
-            const guyCollected = guyCollection[i];
-            let guyExhibit = document.createElement('img');
-            guyExhibit.src = `./guys/guy-${guyCollected.id}.png`;
-            guyMuseum.appendChild(guyExhibit);
-        }
-    }
-
+    addGuyToMuseum(guyID);
     guyInner.src = `./guys/guy-${guyID}.png`;
 
     if (flipped) {
