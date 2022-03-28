@@ -132,6 +132,16 @@ function makeGuyJump(guy) {
         }
     ], 1000);
 
+    guyJumperInner.animate([
+        {
+            opacity: '100%',
+            offset: 0.7
+        },
+        {
+            opacity: '0%'
+        }
+    ], 800)
+
     setTimeout(() => {
         guyJumper.parentNode.removeChild(guyJumper);
     }, 800);
