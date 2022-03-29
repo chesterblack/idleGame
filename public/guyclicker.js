@@ -1,8 +1,8 @@
 const maxGuys = 4;
 const guyClickerButton = document.querySelector('.guy-clicker');
-const autoGuyButton = document.querySelector('.autoguy-toggle');
+const autoGuyButton = document.querySelector('.autoguy-upgrade');
+const autoGuyPriceSign = document.querySelector('.autoguy-cost');
 const guyCounter = document.querySelector('.guy-counter');
-const root = document.documentElement;
 const guyJumpRange = 750;
 const guyMuseum = document.querySelector('.guy-collection');
 
@@ -10,18 +10,29 @@ let guyCollection = [];
 let guyCount = parseInt(guyCounter.innerText);
 
 let autoGuyer;
-let autoGuyerActive = false;
+let autoGuyUpgradeCost = 100;
+let autoGuySpeed = 2000;
 
 for (let i = 0; i < guyMuseum.children.length; i++) {
     const guyExhibit = guyMuseum.children[i];
     console.log(guyExhibit);
     guyCollection.push({id: parseInt(guyExhibit.dataset.guyid)});
-
-    console.log(guyCollection);
 }
 
 autoGuyButton.addEventListener('click', () => {
-    toggleAutoGuyer();
+    if (guyCount < autoGuyUpgradeCost) {
+        alert('Not enough guys!');
+        return;
+    }
+
+    guyCount -= autoGuyUpgradeCost;
+    autoGuySpeed = autoGuySpeed / 2;
+    autoGuyUpgradeCost = autoGuyUpgradeCost * 2;
+
+    clearInterval(autoGuyer);
+    autoGuyer = window.setInterval(autoGuyerisation, autoGuySpeed);
+    autoGuyPriceSign.innerText = autoGuyUpgradeCost;
+    guyCounter.innerText = guyCount;
 });
 
 guyClickerButton.addEventListener('click', () => {

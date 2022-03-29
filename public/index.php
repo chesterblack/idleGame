@@ -44,7 +44,8 @@
     <button class="guy-clicker">
         let there be guys
     </button>
-    <button class="autoguy-toggle">you do it for me</button>
+
+    <button class="autoguy-upgrade">more guys (<span class="autoguy-cost">100</span>)</button>
 
     <script src="guyclicker.js"></script>
 </body>
