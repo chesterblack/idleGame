@@ -1,10 +1,12 @@
 const maxGuys = 4;
 const guyClickerButton = document.querySelector('.guy-clicker');
 const autoGuyButton = document.querySelector('.autoguy-upgrade');
+const guySpawner = document.querySelector('.guy-spawner');
 const autoGuyPriceSign = document.querySelector('.autoguy-cost');
 const guyCounter = document.querySelector('.guy-counter');
 const guyJumpRange = 750;
 const guyMuseum = document.querySelector('.guy-collection');
+const gpsCounter = document.querySelector('.gps');
 
 let guyCollection = [];
 let guyCount = parseInt(guyCounter.innerText);
@@ -13,11 +15,19 @@ let autoGuyer;
 let autoGuyUpgradeCost = 100;
 let autoGuySpeed = 2000;
 
-for (let i = 0; i < guyMuseum.children.length; i++) {
-    const guyExhibit = guyMuseum.children[i];
-    console.log(guyExhibit);
-    guyCollection.push({id: parseInt(guyExhibit.dataset.guyid)});
+window.onload = () => {
+    for (let i = 0; i < guyMuseum.children.length; i++) {
+        const guyExhibit = guyMuseum.children[i];
+        guyCollection.push({id: parseInt(guyExhibit.dataset.guyid)});
+    }
+    let cookies = getCookies();
+    if (cookies.guycount) {
+        guyCount = parseInt(cookies.guycount);
+        updateGuyCount();
+        saveGame();
+    }
 }
+
 
 autoGuyButton.addEventListener('click', () => {
     if (guyCount < autoGuyUpgradeCost) {
@@ -32,17 +42,26 @@ autoGuyButton.addEventListener('click', () => {
     clearInterval(autoGuyer);
     autoGuyer = window.setInterval(autoGuyerisation, autoGuySpeed);
     autoGuyPriceSign.innerText = autoGuyUpgradeCost;
-    guyCounter.innerText = guyCount;
+    updateGuyCount();
+    gpsCounter.innerText = Math.round((1000 / autoGuySpeed) * 10) / 10;
 });
 
 guyClickerButton.addEventListener('click', () => {
     guyCount++;
-    guyCounter.innerText = guyCount;
+    updateGuyCount();
 
     let guy = createGuy();
     makeGuyJump(guy);
-    saveGame();
+    saveGameLocally();
 });
+
+function updateGuyCount() {
+    guyCounter.innerText = guyCount;
+}
+
+function saveGameLocally() {
+    document.cookie = `guycount=${guyCount}; path=/`;
+}
 
 function getCookies() {
     const cookies = Object.fromEntries(
@@ -54,8 +73,6 @@ function getCookies() {
 function saveGame() {
     let url = '../save.php?guys=' + guyCount;
     let cookies = getCookies();
-
-    console.log(cookies);
 
     if (cookies.saveid) {
         url += `&id=${cookies.saveid}`;
@@ -87,7 +104,6 @@ function upsert(array, element) {
 }
 
 function addGuyToMuseum(guy) {
-    console.log(guyCollection);
     if (upsert(guyCollection, {id: guy})) {
         guyMuseum.innerHTML = '';
         for (let i = 0; i < guyCollection.length; i++) {
@@ -130,7 +146,17 @@ function makeGuyJump(guy) {
     let guyJumperInner = guy.querySelector('.guy-inner');
     let rand = randomNumber(-guyJumpRange, guyJumpRange);
 
-    document.querySelector('.guy-spawner').appendChild(guyJumper);
+    guySpawner.querySelector('.portal').animate([
+        {
+            rotate: '0deg',
+        },
+        {
+            rotate: '180deg',
+            easing: 'ease-in-out',
+        }
+    ], 500);
+
+    guySpawner.appendChild(guyJumper);
 
     guyJumper.animate([
         {

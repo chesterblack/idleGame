@@ -26,6 +26,9 @@
             Guys you got: <span class="guy-counter"><?= $guyCount; ?></span>
         </div>
         <div>
+            Guys per second: <span class="gps">0</span>gps
+        </div>
+        <div>
             Guy collection:
             <div class="guy-collection">
                 <?php
@@ -40,12 +43,13 @@
             </div>
         </div>
     </div>
-    <div class="guy-spawner"></div>
     <button class="guy-clicker">
         let there be guys
     </button>
 
     <button class="autoguy-upgrade">more guys (<span class="autoguy-cost">100</span>)</button>
+
+    <div class="guy-spawner"><img src="/portal.png" class='portal'></div>
 
     <script src="guyclicker.js"></script>
 </body>
