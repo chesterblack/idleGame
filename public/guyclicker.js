@@ -13,7 +13,7 @@ let guyCount = parseInt(guyCounter.innerText);
 
 let autoGuyer;
 let autoGuyUpgradeCost = 100;
-let autoGuySpeed = 2000;
+let gps = .5;
 
 window.onload = () => {
     for (let i = 0; i < guyMuseum.children.length; i++) {
@@ -36,14 +36,14 @@ autoGuyButton.addEventListener('click', () => {
     }
 
     guyCount -= autoGuyUpgradeCost;
-    autoGuySpeed = autoGuySpeed / 2;
+    gps = gps * 2;
     autoGuyUpgradeCost = autoGuyUpgradeCost * 2;
-
+    let autoguySpeed = (1 / gps) * 1000;
     clearInterval(autoGuyer);
-    autoGuyer = window.setInterval(autoGuyerisation, autoGuySpeed);
+    autoGuyer = window.setInterval(autoGuyerisation, autoguySpeed);
     autoGuyPriceSign.innerText = autoGuyUpgradeCost;
     updateGuyCount();
-    gpsCounter.innerText = Math.round((1000 / autoGuySpeed) * 10) / 10;
+    gpsCounter.innerText = gps;
 });
 
 guyClickerButton.addEventListener('click', () => {
