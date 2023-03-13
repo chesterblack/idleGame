@@ -8,6 +8,8 @@ const guyJumpRange = 750;
 const guyMuseum = document.querySelector('.guy-collection');
 const gpsCounter = document.querySelector('.gps');
 
+// Test comment for git
+
 let guyCollection = [];
 let guyCount = parseInt(guyCounter.innerText);
 
